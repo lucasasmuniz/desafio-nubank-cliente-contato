@@ -1,12 +1,12 @@
 package spring.boot.desafio.nubank.services;
 
 import java.util.List;
-import java.util.function.Function;
 
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import spring.boot.desafio.nubank.dtos.ClienteDTO;
+import spring.boot.desafio.nubank.entities.Cliente;
 import spring.boot.desafio.nubank.repositories.ClienteRepository;
 
 @RequiredArgsConstructor
@@ -16,6 +16,14 @@ public class ClienteService {
 	private final ClienteRepository repository;
 	
 	public List<ClienteDTO> findAll(){
-		return repository.findAll().stream().map(x -> new ClienteDTO(x, x.getContatos())).toList();
+		return repository.searchClienteEContatos().stream().map(x -> new ClienteDTO(x, x.getContatos())).toList();
+	}
+
+	public ClienteDTO insert(ClienteDTO dto) {
+		Cliente entity = new Cliente();
+		entity.setNome(dto.getNome());
+		entity = repository.save(entity);
+		
+		return new ClienteDTO(entity);
 	}
 }
