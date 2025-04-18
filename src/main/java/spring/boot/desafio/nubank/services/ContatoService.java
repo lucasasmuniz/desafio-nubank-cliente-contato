@@ -1,5 +1,7 @@
 package spring.boot.desafio.nubank.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -24,5 +26,9 @@ public class ContatoService {
 		entity = repository.save(entity);
 		
 		return new ContatoDTO(entity, entity.getCliente());
+	}
+
+	public List<ContatoDTO> findClientContacts(Long id) {
+		return repository.findByClienteId(id).stream().map(x -> new ContatoDTO(x, x.getCliente())).toList();
 	}
 }
