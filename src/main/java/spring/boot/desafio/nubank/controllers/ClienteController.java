@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import spring.boot.desafio.nubank.dtos.ClienteDTO;
 import spring.boot.desafio.nubank.dtos.ContatoDTO;
@@ -31,7 +32,7 @@ public class ClienteController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClienteDTO> insert(@RequestBody ClienteDTO dto){
+	public ResponseEntity<ClienteDTO> insert(@RequestBody @Valid ClienteDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")
 				.buildAndExpand(dto.getId()).toUri();

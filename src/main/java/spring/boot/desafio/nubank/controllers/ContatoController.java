@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import spring.boot.desafio.nubank.dtos.ContatoDTO;
 import spring.boot.desafio.nubank.services.ContatoService;
@@ -21,7 +22,7 @@ public class ContatoController {
 	private final ContatoService service;
 	
 	@PostMapping
-	public ResponseEntity<ContatoDTO> insert(@RequestBody ContatoDTO dto){
+	public ResponseEntity<ContatoDTO> insert(@RequestBody @Valid ContatoDTO dto){
 		dto = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")
 				.buildAndExpand(dto.getId()).toUri();

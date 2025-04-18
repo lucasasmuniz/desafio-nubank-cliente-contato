@@ -2,13 +2,27 @@ package spring.boot.desafio.nubank.dtos;
 
 import java.util.Objects;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import spring.boot.desafio.nubank.entities.Cliente;
 import spring.boot.desafio.nubank.entities.Contato;
 
 public class ContatoDTO {
 	private Long id;
+	
+	@Size(min = 3, message = "Tamanho mínimo de 3 caracteres")
+	@NotBlank(message = "Campo Obrigatório")
 	private String nome;
+	
+	@Email(message = "Campo deve ser um email válido")
+	@NotBlank(message = "Campo Obrigatório")
 	private String email;
+	
+	@NotNull(message = "Campo Obrigatório")
+	@Positive(message = "Campo deve ser positivo")
 	private Long clienteId;
 	
 	public ContatoDTO() {

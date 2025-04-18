@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import spring.boot.desafio.nubank.entities.Cliente;
 import spring.boot.desafio.nubank.entities.Contato;
 
 public class ClienteDTO {
 	
 	private Long id;
+	
+	@Size(min = 3, message = "Tamanho mínimo de 3 caracteres")
+	@NotBlank(message = "Campo Obrigatório")
 	private String nome;
 	private List<ContatoDTO> contatos = new ArrayList<>();
 	
