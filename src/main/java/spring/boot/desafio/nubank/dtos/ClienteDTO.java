@@ -1,35 +1,36 @@
-package spring.boot.desafio.nubank.entities;
+package spring.boot.desafio.nubank.dtos;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import spring.boot.desafio.nubank.entities.Cliente;
+import spring.boot.desafio.nubank.entities.Contato;
 
-@Entity
-@Table(name = "tb_cliente")
-public class Cliente {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ClienteDTO {
+	
 	private Long id;
 	private String nome;
+	private List<ContatoDTO> contatos = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "cliente")
-	private List<Contato> contatos = new ArrayList<>();
-
-	public Cliente() {
+	public ClienteDTO() {
 	}
 	
-	public Cliente(Long id, String nome, List<Contato> contatos) {
+	public ClienteDTO(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
-		this.contatos = contatos;
+	}
+	
+	public ClienteDTO(Cliente entity) {
+		this.id = entity.getId();
+		this.nome = entity.getNome();
+	}
+	
+	public ClienteDTO(Cliente entity, List<Contato> contatos) {
+		this(entity);
+		contatos.forEach(x -> {
+			this.contatos.add(new ContatoDTO(x, entity));
+		});
 	}
 
 	public Long getId() {
@@ -48,7 +49,7 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public List<Contato> getContatos() {
+	public List<ContatoDTO> getContatos() {
 		return contatos;
 	}
 
@@ -65,7 +66,7 @@ public class Cliente {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
+		ClienteDTO other = (ClienteDTO) obj;
 		return Objects.equals(id, other.id);
 	}
 }
