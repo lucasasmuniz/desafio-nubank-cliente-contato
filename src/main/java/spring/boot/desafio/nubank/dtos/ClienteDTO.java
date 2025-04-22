@@ -6,9 +6,15 @@ import java.util.Objects;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import spring.boot.desafio.nubank.entities.Cliente;
 import spring.boot.desafio.nubank.entities.Contato;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ClienteDTO {
 	
 	private Long id;
@@ -17,9 +23,6 @@ public class ClienteDTO {
 	@NotBlank(message = "Campo Obrigatório")
 	private String nome;
 	private List<ContatoDTO> contatos = new ArrayList<>();
-	
-	public ClienteDTO() {
-	}
 	
 	public ClienteDTO(Long id, String nome) {
 		this.id = id;
@@ -36,42 +39,5 @@ public class ClienteDTO {
 		contatos.forEach(x -> {
 			this.contatos.add(new ContatoDTO(x, entity));
 		});
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public List<ContatoDTO> getContatos() {
-		return contatos;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ClienteDTO other = (ClienteDTO) obj;
-		return Objects.equals(id, other.id);
 	}
 }
